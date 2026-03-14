@@ -13,6 +13,7 @@ wget https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Build_2nd/refs/
 wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/setuid_hook.c
 wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/readdir.c
 wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/fdinfo.c
+wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/supercalls.c
 
 # Configs
 echo "
@@ -46,6 +47,7 @@ chmod +xrw backport_patches.sh
 chmod +xrw fdinfo.c
 chmod +xrw readdir.c
 chmod +xrw setuid_hook.c
+chmod +xrw supercalls.c
 
 # Applying patches
 # patch -p1 < kernel-4.14.patch
@@ -294,7 +296,9 @@ EOF
 rm -rf drivers/kernelsu/setuid_hook.c
 rm -rf fs/readdir.c
 rm -rf fs/notify/fdinfo.c
+rm -rf drivers/kernelsu/supercalls.c
 
 mv setuid_hook.c drivers/kernelsu/
 mv readdir.c fs/
 mv fdinfo.c fs/notify/
+mv supercalls.c drivers/kernelsu
