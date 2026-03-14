@@ -10,6 +10,9 @@ wget https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Build_2nd/refs/
 wget https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Build_2nd/refs/heads/mainline/Patches/susfs_inline_hook_patches.sh
 wget https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Build_2nd/refs/heads/mainline/Patches/backport_selinux_patches.sh
 wget https://raw.githubusercontent.com/JackA1ltman/NonGKI_Kernel_Build_2nd/refs/heads/mainline/Patches/backport_patches.sh
+wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/setuid_hook.c
+wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/readdir.c
+wget https://raw.githubusercontent.com/DevCatowa/DevCatowa_Random_stuff/refs/heads/main/T509/fdinfo.c
 
 # Configs
 echo "
@@ -26,6 +29,11 @@ CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y
 CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y
 CONFIG_KSU_SUSFS_OPEN_REDIRECT=y
 CONFIG_KSU_SUSFS_SUS_MAP=y
+CONFIG_KSU_MULTI_MANAGER_SUPPORT=y
+CONFIG_CPU_FREQ_GOV_POWERSAVE=y
+CONFIG_CPU_FREQ_GOV_ONDEMAND=y
+CONFIG_CPU_FREQ_GOV_CONSERVATIVE=y
+CONFIG_CPU_FREQ_GOV_INTERACTIVE=y
 " >> arch/arm64/configs/gta4lve_eur_open_defconfig
 
 
@@ -35,6 +43,9 @@ chmod +xrw susfs_patch_to_4.14.patch
 chmod +xrw susfs_inline_hook_patches.sh
 chmod +xrw backport_selinux_patches.sh
 chmod +xrw backport_patches.sh
+chmod +xrw fdinfo.c
+chmod +xrw readdir.c
+chmod +xrw setuid_hook.c
 
 # Applying patches
 # patch -p1 < kernel-4.14.patch
@@ -278,3 +289,12 @@ lines.insert(449, new_code)
 open('fs/susfs.c', 'w').writelines(lines)
 print("Done!")
 EOF
+
+# Moving new files
+rm -rf drivers/kernelsu/setuid_hook.c
+rm -rf fs/readdir.c
+rm -rf fs/notify/fdinfo.c
+
+mv setuid_hook.c drivers/kernelsu/
+mv readdir.c fs/
+mv fdinfo.c fs/notify/
